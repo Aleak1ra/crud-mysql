@@ -1,2 +1,7 @@
 bd\ConnectionFactory.class
 com\mycompany\projetosteam\ProjetoSteam.class
+model\Jogo.class
+view\TelaInserirGames$2.class
+view\TelaInserirGames.class
+bd\JogoDAO.class
+view\TelaInserirGames$1.class
