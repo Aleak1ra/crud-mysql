@@ -8,7 +8,7 @@ import model.Jogo;
 public class JogoDAO {
 
     public void inserir(Jogo j) {
-        String sql = "INSERT INTO jogo (nome, ano, imagem, desenvolvedor, genero( VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO jogo (nome, ano, imagem, desenvolvedor, genero) VALUES (?, ?, ?, ?, ?)";
 
         Connection c = null;
         PreparedStatement pstm = null;
@@ -24,6 +24,7 @@ public class JogoDAO {
             pstm.setString(5, j.getGenero());
 
             pstm.execute();
+            JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro nao conectado ao BD");
         } finally {

@@ -4,15 +4,21 @@
  */
 package view;
 
+import bd.JogoDAO;
+import java.io.File;
+import java.nio.file.Files;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import model.Jogo;
+
 /**
  *
  * @author Unicesumar
  */
 public class TelaInserirGames extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaInserirGames
-     */
+    Jogo j = new Jogo();
+
     public TelaInserirGames() {
         initComponents();
     }
@@ -65,6 +71,11 @@ public class TelaInserirGames extends javax.swing.JFrame {
         tfGenero.setText("jTextField1");
 
         btCarregarImagem.setText("jButton1");
+        btCarregarImagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCarregarImagemActionPerformed(evt);
+            }
+        });
 
         btnInserir.setText("INSERIR");
         btnInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -74,6 +85,11 @@ public class TelaInserirGames extends javax.swing.JFrame {
         });
 
         jButton2.setText("REINICIAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("VOLTAR");
 
@@ -175,8 +191,38 @@ public class TelaInserirGames extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
-        // TODO add your handling code here:
+        if (!tfNome.getText().equals("")) {
+            j.setNome(tfNome.getText());
+            j.setAno(Integer.parseInt(tfAno.getText()));
+            j.setDesenvolvedor(tfDesenvolvedor.getText());
+            j.setGenero(tfGenero.getText());
+            
+            JogoDAO jDAO = new JogoDAO();
+            jDAO.inserir(j);
+        } else {
+            JOptionPane.showMessageDialog(null, "Obrigatorio colocar o nome!");
+        }
     }//GEN-LAST:event_btnInserirActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btCarregarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCarregarImagemActionPerformed
+        JFileChooser fc = new JFileChooser();        // TODO add your handling code here:
+        int returnValue = fc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fc.getSelectedFile();
+
+            try {
+                j.setImagem(Files.readAllBytes(selectedFile.toPath()));
+                JOptionPane.showMessageDialog(null, "Arquivo carregado com sucesso!");
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Arquivo não carregado!");
+            }
+        }
+    }//GEN-LAST:event_btCarregarImagemActionPerformed
 
     /**
      * @param args the command line arguments
